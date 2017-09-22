@@ -10,7 +10,7 @@ from create_trello_cards.settings import *
 @click.option('--udemy-user-id', default=None, help='user_id of udemy')
 @click.option('--goodreads-user-id', default=None, help='user_id of goodreads')
 @click.argument('board_id')
-def main(udemy_user_id, goodreads_id, board_id):
+def main(udemy_user_id, goodreads_user_id, board_id):
     if not udemy_user_id  and not goodreads_id:
         return
     trello = Trello(TRELLO_KEY, TRELLO_TOKEN)
