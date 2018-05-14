@@ -65,3 +65,22 @@ def test_create_card(trello_obj, trello_url, json_directory):
     responses.add(responses.POST, url=re.compile(trello_url), json=expected, status=200)
     response = trello_obj.create_card(list_id='5af97c9dbbe346788853b3ba', desc='foobar', name='test_card')
     assert response == expected['id']
+
+
+@responses.activate
+def test_add_attachment_to_card(trello_obj, trello_url):
+    expected = {'id': '5af98ed1c7b83322d90cf081',
+                'bytes': None,
+                'date': '2018-05-14T13:27:45.702Z',
+                'edgeColor': None,
+                'idMember': '574cc3d3dec5144369efb6ee',
+                'isUpload': False,
+                'mimeType': '',
+                'name': 'foobarzee',
+                'previews': [],
+                'url': 'http://www.google.com',
+                'pos': 16384,
+                'limits': {}}
+    responses.add(responses.POST, url=re.compile(trello_url), json=expected, status=200)
+    response = trello_obj.add_attachment_to_card(card_id='fooid', attachment_url='foourl', name='bar')
+    assert response == expected['id']
