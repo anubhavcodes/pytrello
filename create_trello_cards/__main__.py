@@ -28,8 +28,8 @@ def main(udemy_user_id, goodreads_user_id, board_id):
         with db_session:
             for c in u.courses:
                 course = Course.new(title=c['title'],
-                                    url=c['url'],
-                                    thumbnail=c['thumbnail'])
+                                    url='https://www.udemy.com' + c['url'],
+                                    thumbnail=c['image_480x270'])
                 if Course.is_course_new(course):
                     card_id = trello.create_card(l_courses, name=course.title, desc=course.url)
                     trello.add_attachment_to_card(card_id, course.thumbnail, name='thumbnail')
