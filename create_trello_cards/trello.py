@@ -50,6 +50,7 @@ class Trello(object):
         Adds item to an already created checklists with `checklist_id`
         `items` should be an iterable.
         """
+        #@TODO add exceptions
         url = self.base_url + '/checklists/{}/checkItems'.format(checklist_id)
         for name in items:
             payload = {
