@@ -27,13 +27,14 @@ def main(udemy_user_id, goodreads_user_id, board_id):
 
         with db_session:
             for c in u.courses:
-                course = Course.new(title=c['title'],
+                course = Course.new(id=c['id'],
+                                    title=c['title'],
                                     url='https://www.udemy.com' + c['url'],
                                     thumbnail=c['image_480x270'])
                 if Course.is_course_new(course):
                     card_id = trello.create_card(l_courses, name=course.title, desc=course.url)
                     trello.add_attachment_to_card(card_id, course.thumbnail, name='thumbnail')
-                    curriculum = u.get_curriculum(course.url)
+                    curriculum = u.get_curriculum(course.id)
                     checklist_id = trello.create_checklist(card_id, name='Content')
                     trello.add_items_to_checklist(checklist_id, curriculum)
                     Course.add_course(course)
