@@ -56,3 +56,12 @@ def test_create_checklist(trello_obj, trello_url):
     responses.add(responses.POST, url=re.compile(trello_url), json=expected, status=200)
     response = trello_obj.create_checklist(card_id='fooid', name='test_checklist')
     assert response == expected['id']
+
+
+@responses.activate
+def test_create_card(trello_obj, trello_url, json_directory):
+    with open(os.path.join(json_directory, 'create_card.json')) as f:
+        expected = json.load(f)
+    responses.add(responses.POST, url=re.compile(trello_url), json=expected, status=200)
+    response = trello_obj.create_card(list_id='5af97c9dbbe346788853b3ba', desc='foobar', name='test_card')
+    assert response == expected['id']
