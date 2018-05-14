@@ -43,3 +43,16 @@ def test_get_cards(trello_obj, trello_url, json_directory):
     responses.add(responses.GET, url=re.compile(trello_url), json=expected, status=200)
     response = trello_obj.get_cards(list_id='fooid')
     assert response == expected
+
+
+@responses.activate
+def test_create_checklist(trello_obj, trello_url):
+    expected = {'id': '5af98622a7cfee3ce5bd3c9b',
+                'name': 'test_checklist',
+                'idBoard': '5af97addbaeeb13712b04ed1',
+                'idCard': '5af981b43a87d3d98c9b7cfa',
+                'pos': 32768,
+                'checkItems': []}
+    responses.add(responses.POST, url=re.compile(trello_url), json=expected, status=200)
+    response = trello_obj.create_checklist(card_id='fooid', name='test_checklist')
+    assert response == expected['id']
