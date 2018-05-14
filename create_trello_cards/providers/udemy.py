@@ -1,5 +1,6 @@
 from create_trello_cards.providers import Provider
 from create_trello_cards.utility import get_soup
+import requests
 
 class Udemy(Provider):
     """Class to get all the courses from udemy"""
@@ -10,7 +11,25 @@ class Udemy(Provider):
         self.url = "https://www.udemy.com/user/{}/".format(self.user_id)
         self.soup = get_soup(self.url)
         self.courses = []
-        self.get_cards()
+        self.api_id = self.get_api_id()
+        self.api_url = "https://www.udemy.com/api-2.0/users/{}/subscribed-profile-courses/".format(self.api_id)
+        self.get_cards_api()
+
+    def get_cards_api(self):
+        self.hit_api()
+
+    def hit_api(self):
+        r = requests.get(self.api_url)
+        response = r.json()
+        if response['next']:
+            self.api_url = response['next']
+            self.hit_api()
+        self.courses.extend(response['results'])
+
+    def get_api_id(self):
+        t = self.soup.find('div', {'class':'img-circle user-avatar__img'})
+        id = t.attrs['style'].replace("background-image:url(", "").replace(")", "")
+        return id.split('/')[-1].split('_')[0]
 
     def get_cards(self):
         self.get_all_pages()
