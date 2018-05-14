@@ -11,7 +11,7 @@ from create_trello_cards.settings import *
 @click.option('--goodreads-user-id', default=None, help='user_id of goodreads')
 @click.argument('board_id')
 def main(udemy_user_id, goodreads_user_id, board_id):
-    if not udemy_user_id  and not goodreads_id:
+    if not udemy_user_id  and not goodreads_user_id:
         return
     trello = Trello(TRELLO_KEY, TRELLO_TOKEN)
     lists = trello.get_lists(board_id)
@@ -27,13 +27,14 @@ def main(udemy_user_id, goodreads_user_id, board_id):
 
         with db_session:
             for c in u.courses:
-                course = Course.new(title=c['title'],
-                                    url=c['url'],
-                                    thumbnail=c['thumbnail'])
+                course = Course.new(id=c['id'],
+                                    title=c['title'],
+                                    url='https://www.udemy.com' + c['url'],
+                                    thumbnail=c['image_480x270'])
                 if Course.is_course_new(course):
                     card_id = trello.create_card(l_courses, name=course.title, desc=course.url)
                     trello.add_attachment_to_card(card_id, course.thumbnail, name='thumbnail')
-                    curriculum = u.get_curriculum(course.url)
+                    curriculum = u.get_curriculum(course.id)
                     checklist_id = trello.create_checklist(card_id, name='Content')
                     trello.add_items_to_checklist(checklist_id, curriculum)
                     Course.add_course(course)

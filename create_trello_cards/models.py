@@ -1,4 +1,4 @@
-from pony.orm import Database
+from pony.orm import Database, PrimaryKey
 from pony.orm import Required, Optional
 from pony.orm import db_session
 from pony.orm import select, delete, commit
@@ -11,6 +11,7 @@ class Course(db.Entity):
     """
     A class to represent a course
     """
+    id = PrimaryKey(int, auto=False)
     title = Required(str, unique=True)
     url = Optional(str, unique=True)
     thumbnail = Optional(str)
@@ -18,12 +19,12 @@ class Course(db.Entity):
 
     @staticmethod
     @db_session
-    def new(title, url='', thumbnail='', processed=False):
+    def new(id, title, url='', thumbnail='', processed=False):
         """Return a Course either new or from database"""
         course = select(c for c in Course if c.title == title)[:]
         if course:
             return course[0]
-        return Course(title=title, url=url, thumbnail=thumbnail, processed=processed)
+        return Course(id=id, title=title, url=url, thumbnail=thumbnail, processed=processed)
 
     @staticmethod
     @db_session
