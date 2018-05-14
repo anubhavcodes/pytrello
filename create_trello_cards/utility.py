@@ -16,18 +16,18 @@ def get_soup(url):
         try:
             r = requests.get(url, headers=headers, timeout=10)
         except requests.exceptions.ConnectionError:
-            print "There is no network connectivity on this computer, will try again after {} seconds".format(counter)
+            print("There is no network connectivity on this computer, will try again after {} seconds".format(counter))
             counter *= counter
             continue
         except requests.exception.Timeout:
-            print "There is a problem at the target. Retry again in {} seconds".format(timeout_counter)
+            print("There is a problem at the target. Retry again in {} seconds".format(timeout_counter))
             continue
         except requests.exception.TooManyRedirects:
-            print "There is something wrong with the URL, has the website moved?"
+            print("There is something wrong with the URL, has the website moved?")
             raise MovedURL("Website has moved?")
         except requests.exceptions.RequestException as e:
-            print "Something has horribly gone wrong, contact the developer"
-            print e
+            print("Something has horribly gone wrong, contact the developer")
+            print(e)
             raise HorriblyGoneWrongError("Something has horribly gone wrong, contact the developer")
         break
         while r.status_code != 200:
@@ -35,18 +35,18 @@ def get_soup(url):
             try:
                 r = requests.get(url, headers=headers, timeout=10)
             except requests.exceptions.ConnectionError:
-                print "Requests blocked! Lets wait for {} seconds".format(counter)
+                print("Requests blocked! Lets wait for {} seconds".format(counter))
                 counter *= counter
                 continue
             except requests.exception.Timeout:
-                print "There is a problem at the target. Retrying again in {} seconds".format(timeout_counter)
+                print("There is a problem at the target. Retrying again in {} seconds".format(timeout_counter))
                 continue
             except requests.exception.TooManyRedirects:
-                print "There is somthing wrong with the URL, has the website moved?"
+                print("There is somthing wrong with the URL, has the website moved?")
                 raise MovedURL("Website has moved")
             except requests.exceptions.RequestException as e:
-                print "Something horribly gone wrong, contact the developer"
-                print e
+                print("Something horribly gone wrong, contact the developer")
+                print(e)
                 raise HorriblyGoneWrongError("Somethign has horribly gone wrong, contact the developer")
             break
         sleep(0.5)
