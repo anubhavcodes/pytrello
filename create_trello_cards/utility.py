@@ -19,10 +19,10 @@ def get_soup(url):
             print("There is no network connectivity on this computer, will try again after {} seconds".format(counter))
             counter *= counter
             continue
-        except requests.exception.Timeout:
+        except requests.exceptions.Timeout:
             print("There is a problem at the target. Retry again in {} seconds".format(timeout_counter))
             continue
-        except requests.exception.TooManyRedirects:
+        except requests.exceptions.TooManyRedirects:
             print("There is something wrong with the URL, has the website moved?")
             raise MovedURL("Website has moved?")
         except requests.exceptions.RequestException as e:
@@ -38,10 +38,10 @@ def get_soup(url):
                 print("Requests blocked! Lets wait for {} seconds".format(counter))
                 counter *= counter
                 continue
-            except requests.exception.Timeout:
+            except requests.exceptions.Timeout:
                 print("There is a problem at the target. Retrying again in {} seconds".format(timeout_counter))
                 continue
-            except requests.exception.TooManyRedirects:
+            except requests.exceptions.TooManyRedirects:
                 print("There is somthing wrong with the URL, has the website moved?")
                 raise MovedURL("Website has moved")
             except requests.exceptions.RequestException as e:
