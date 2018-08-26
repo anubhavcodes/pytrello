@@ -1,8 +1,9 @@
 import os
 import pytest
 
+basedir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 @pytest.fixture()
 def setup_tests_directory():
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    return os.path.join(BASE_DIR, "tests")
+    return os.path.join(basedir, "tests")

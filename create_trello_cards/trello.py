@@ -1,5 +1,6 @@
 import requests
 
+
 class Trello(object):
     """
     A class to implement Trello Api
@@ -14,7 +15,7 @@ class Trello(object):
         self.payload = {
             'key': self.trello_key,
             'token': self.trello_token
-            }
+        }
         self.base_url = "https://api.trello.com/1"
 
     def _get_response(self, url):
@@ -50,7 +51,7 @@ class Trello(object):
         Adds item to an already created checklists with `checklist_id`
         `items` should be an iterable.
         """
-        #@TODO add exceptions
+        # @TODO add exceptions
         url = self.base_url + '/checklists/{}/checkItems'.format(checklist_id)
         for name in items:
             payload = {

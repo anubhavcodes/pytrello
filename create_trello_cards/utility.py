@@ -4,6 +4,7 @@ from time import sleep
 
 from create_trello_cards.exceptions import MovedURL, HorriblyGoneWrongError
 
+
 def get_soup(url):
     """Method to get the soup from the url"""
     counter = 5

@@ -7,6 +7,7 @@ from create_trello_cards.settings import DB_PATH
 
 db = Database()
 
+
 class Course(db.Entity):
     """
     A class to represent a course
@@ -65,7 +66,7 @@ class Book(db.Entity):
     avg_rating = Optional(str)
     thumbnail = Optional(str)
     processed = Optional(bool, default=False)
-    
+
     @staticmethod
     @db_session
     def new(title, isbn, author='', url='', avg_rating='', thumbnail='', processed=False):
@@ -73,7 +74,8 @@ class Book(db.Entity):
         book = select(b for b in Book if b.title == title and b.isbn == isbn)[:]
         if book:
             return book[0]
-        return Book(title=title, isbn=isbn, author=author, url=url, avg_rating=avg_rating, thumbnail=thumbnail, processed=processed)
+        return Book(title=title, isbn=isbn, author=author, url=url, avg_rating=avg_rating, thumbnail=thumbnail,
+                    processed=processed)
 
     @db_session
     def is_book_new(book):
@@ -88,7 +90,7 @@ class Book(db.Entity):
         """Add a book to the db"""
         book.processed = True
         commit()
-        
+
     @staticmethod
     @db_session
     def count():
@@ -100,6 +102,7 @@ class Book(db.Entity):
     def delete_all():
         """Delete all information from the table"""
         delete(b for b in Book)
+
 
 db.bind(provider='sqlite', filename=DB_PATH, create_db=True)
 db.generate_mapping(create_tables=True)
