@@ -1,17 +1,20 @@
 class Error(Exception):
     pass
 
+
 class MovedURL(Error):
     """
     Exception to raise when the website has moved to a different location
     """
     pass
 
+
 class HorriblyGoneWrongError(Error):
     """
     Exception to raise when there is something wrong gone which is difficult to comprehend
     """
     pass
+
 
 class ResponseNotOKError(Error):
     """

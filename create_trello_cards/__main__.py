@@ -6,12 +6,13 @@ from create_trello_cards.providers.udemy import Udemy
 from create_trello_cards.providers.goodreads import Goodreads
 from create_trello_cards.settings import *
 
+
 @click.command()
 @click.option('--udemy-user-id', default=None, help='user_id of udemy')
 @click.option('--goodreads-user-id', default=None, help='user_id of goodreads')
 @click.argument('board_id')
 def main(udemy_user_id, goodreads_user_id, board_id):
-    if not udemy_user_id  and not goodreads_user_id:
+    if not udemy_user_id and not goodreads_user_id:
         return
     trello = Trello(TRELLO_KEY, TRELLO_TOKEN)
     lists = trello.get_lists(board_id)
@@ -44,17 +45,20 @@ def main(udemy_user_id, goodreads_user_id, board_id):
 
         with db_session:
             for b in g.books:
-                book = Book.new(title=b['title'], 
-                               isbn=b['isbn'] or 'NA', 
-                               author=b['author'],
-                               url=b['url'],
-                               avg_rating=b['avg_rating'],
-                               thumbnail=b['thumbnail'])
+                book = Book.new(title=b['title'],
+                                isbn=b['isbn'] or 'NA',
+                                author=b['author'],
+                                url=b['url'],
+                                avg_rating=b['avg_rating'],
+                                thumbnail=b['thumbnail'])
                 if Book.is_book_new(book):
-                    desc = "Title: {}\nISBN: {}\nURL: {}\nAuthor: {}\nAverage Rating: {}".format(book.title, book.isbn, book.url, book.author, book.avg_rating)
+                    desc = "Title: {}\nISBN: {}\nURL: {}\nAuthor: {}\nAverage Rating: {}".format(book.title, book.isbn,
+                                                                                                 book.url, book.author,
+                                                                                                 book.avg_rating)
                     card_id = trello.create_card(list_id=l_books, name=book.title, desc=desc)
                     trello.add_attachment_to_card(card_id, book.thumbnail, name='thumbnail')
                     Book.add_book(book)
+
 
 if __name__ == '__main__':
     main()
