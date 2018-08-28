@@ -16,6 +16,7 @@ def main(udemy_user_id, goodreads_user_id, board_id):
         return
     trello = Trello(TRELLO_KEY, TRELLO_TOKEN)
     lists = trello.get_lists(board_id)
+    l_courses = None
 
     if udemy_user_id:
         u = Udemy(udemy_user_id)
@@ -32,7 +33,7 @@ def main(udemy_user_id, goodreads_user_id, board_id):
                                     title=c['title'],
                                     url='https://www.udemy.com' + c['url'],
                                     thumbnail=c['image_480x270'])
-                if Course.is_course_new(course):
+                if Course.is_course_new(course) and l_courses:
                     card_id = trello.create_card(l_courses, name=course.title, desc=course.url)
                     trello.add_attachment_to_card(card_id, course.thumbnail, name='thumbnail')
                     curriculum = u.get_curriculum(course.id)
@@ -55,9 +56,10 @@ def main(udemy_user_id, goodreads_user_id, board_id):
                     desc = "Title: {}\nISBN: {}\nURL: {}\nAuthor: {}\nAverage Rating: {}".format(book.title, book.isbn,
                                                                                                  book.url, book.author,
                                                                                                  book.avg_rating)
-                    card_id = trello.create_card(list_id=l_books, name=book.title, desc=desc)
-                    trello.add_attachment_to_card(card_id, book.thumbnail, name='thumbnail')
-                    Book.add_book(book)
+                    if l_books:
+                        card_id = trello.create_card(list_id=l_books, name=book.title, desc=desc)
+                        trello.add_attachment_to_card(card_id, book.thumbnail, name='thumbnail')
+                        Book.add_book(book)
 
 
 if __name__ == '__main__':
