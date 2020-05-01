@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from time import sleep
 
-from create_trello_cards.exceptions import MovedURL, HorriblyGoneWrongError
+from trello.exceptions import MovedURL, HorriblyGoneWrongError
 
 
 def get_soup(url):

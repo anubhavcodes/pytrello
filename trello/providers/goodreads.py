@@ -2,9 +2,9 @@ import requests
 import xmltodict
 import json
 
-from create_trello_cards.providers import Provider
-from create_trello_cards.exceptions import ResponseNotOKError
-from create_trello_cards.utility import get_soup
+from trello.providers import Provider
+from trello.exceptions import ResponseNotOKError
+from trello.utility import get_soup
 
 class Goodreads(Provider):
     """

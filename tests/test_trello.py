@@ -5,7 +5,7 @@ import pytest
 import responses
 import re
 
-from create_trello_cards.trello import Trello
+from trello.trello import Trello
 
 
 @pytest.fixture()

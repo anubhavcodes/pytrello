@@ -1,5 +1,5 @@
-from create_trello_cards.providers import Provider
-from create_trello_cards.utility import get_soup
+from trello.providers import Provider
+from trello.utility import get_soup
 import requests
 
 

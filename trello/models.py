@@ -3,7 +3,7 @@ from pony.orm import Required, Optional
 from pony.orm import db_session
 from pony.orm import select, delete, commit
 
-from create_trello_cards.settings import DB_PATH
+from trello.settings import DB_PATH
 
 db = Database()
 

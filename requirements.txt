@@ -3,3 +3,5 @@ bs4
 click
 pony
 xmltodict
+pytest
+responses

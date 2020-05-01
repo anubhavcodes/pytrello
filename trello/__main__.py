@@ -1,10 +1,10 @@
 import click
 from pony.orm import db_session
-from create_trello_cards.trello import Trello
-from create_trello_cards.models import Course, Book
-from create_trello_cards.providers.udemy import Udemy
-from create_trello_cards.providers.goodreads import Goodreads
-from create_trello_cards.settings import *
+from trello.trello import Trello
+from trello.models import Course, Book
+from trello.providers.udemy import Udemy
+from trello.providers.goodreads import Goodreads
+from trello.settings import *
 
 
 @click.command()
