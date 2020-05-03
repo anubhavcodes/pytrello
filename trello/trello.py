@@ -94,3 +94,15 @@ class Trello(object):
         if response.status_code != requests.codes.ok:
             return None
         return response.json()['id']
+
+    def create_webhook(self, redirect_url, description="webhook"):
+        url = self.base_url + f'/tokens/{self.trello_token}/webhooks'
+        payload = {
+            'key': self.trello_key,
+            'callbackURL': redirect_url,
+            'description': description,
+        }
+        response = requests.request("POST", url, params=payload)
+        if response.status_code != requests.codes.ok:
+            return None
+        return response.json()
