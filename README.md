@@ -23,3 +23,10 @@ I just started refactoring a lot of code from two years ago. Things that I shoul
 - [ ] Integrate run scripts for this repo
 - [ ] Add pre-commit hooks.
 - [ ] Add attrs.
+
+
+### Uploading to pypi
+```bash
+twine upload --repository testpypi dist/*
+twine upload dist/*
+```
