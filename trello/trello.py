@@ -30,6 +30,9 @@ class Trello(object):
     def get_cards(self, list_id):
         return self._get_response(self.base_url + '/lists/{}/cards'.format(list_id))
 
+    def get_card(self, card_id):
+        return self._get_response(self.base_url + '/cards/{}'.format(card_id))
+
     def create_checklist(self, card_id, name):
         """
         Create a checklist on the card with `card_id`
