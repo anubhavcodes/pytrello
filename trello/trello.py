@@ -81,6 +81,19 @@ class Trello(object):
             return None
         return response.json()['id']
 
+    def update_card(self, card_id, name: str, desc: str):
+        url = self.base_url + '/cards' + f'/{card_id}'
+        payload = {
+            'key': self.trello_key,
+            'token': self.trello_token,
+            'name': name,
+            'desc': desc,
+        }
+        response = requests.request("PUT", url, params=payload)
+        if response.status_code != requests.codes.ok:
+            return response
+        return response.json()['id']
+
     def add_attachment_to_card(self, card_id, attachment_url, name):
         """
         Add an attachment to an existing card with `card_id`
